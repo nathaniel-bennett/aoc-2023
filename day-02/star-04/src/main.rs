@@ -39,7 +39,10 @@ fn main() {
     let mut sum_of_powers = 0usize;
 
     for (idx, line) in input.lines().enumerate() {
-        let round = GameRound::parse(line).expect("invalid input detected: {}");
+        let Ok(round) = GameRound::parse(line) else {
+            println!("invalid input detected");
+            std::process::exit(1);
+        };
 
         let (min_red, min_green, min_blue) = min_cubes(&round);
         sum_of_powers += min_red * min_green * min_blue;

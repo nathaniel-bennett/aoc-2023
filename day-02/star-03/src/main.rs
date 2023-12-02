@@ -39,7 +39,11 @@ fn main() {
     let mut total_correct = 0;
 
     for (idx, line) in input.lines().enumerate() {
-        let round = GameRound::parse(line).expect("invalid input detected: {}");
+        let Ok(round) = GameRound::parse(line) else {
+            println!("detected invalid input");
+            std::process::exit(1);
+        };
+
         if is_possible_game(&round) {
             total_correct += round.game_number;
         }
